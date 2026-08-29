@@ -7,99 +7,153 @@
   <title>Go Beauty - Admin Panel</title>
 
   <style>
-    * {
-      box-sizing: border-box;
+    *{
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff5f8;
+    body{
+      margin:0;
+      background:#fff5f8;
+      color:#333;
     }
 
-    header {
-      background: linear-gradient(135deg, #e91e63, #ad1457);
-      color: white;
-      padding: 22px;
-      text-align: center;
+    header{
+      background:linear-gradient(135deg,#e91e63,#880e4f);
+      color:white;
+      text-align:center;
+      padding:25px 15px;
     }
 
-    header h1 {
-      margin: 0;
+    header h1{
+      margin:0;
+      font-size:34px;
     }
 
-    .container {
-      width: 95%;
-      max-width: 1100px;
-      margin: 25px auto;
+    header p{
+      margin:7px 0 0;
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+    .container{
+      width:95%;
+      max-width:1200px;
+      margin:25px auto;
     }
 
-    h2 {
-      color: #c2185b;
-      margin-top: 0;
+    .top-box{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:20px;
     }
 
-    .table-box {
-      overflow-x: auto;
+    .count{
+      background:#fce4ec;
+      color:#ad1457;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:bold;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+    .home-btn{
+      text-decoration:none;
+      background:#ad1457;
+      color:white;
+      padding:11px 18px;
+      border-radius:22px;
     }
 
-    th {
-      background: #c2185b;
-      color: white;
-      padding: 12px;
+    .booking-card{
+      background:white;
+      border-radius:15px;
+      padding:20px;
+      margin-bottom:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.10);
     }
 
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: center;
+    .booking-card h3{
+      color:#ad1457;
+      margin-top:0;
     }
 
-    tr:hover {
-      background: #fff0f5;
+    .details{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:10px;
     }
 
-    .count {
-      background: #fce4ec;
-      color: #ad1457;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-weight: bold;
-      display: inline-block;
+    .details p{
+      margin:6px 0;
     }
 
-    #message {
-      text-align: center;
-      padding: 20px;
-      font-weight: bold;
+    .status{
+      margin-top:15px;
+      font-weight:bold;
+      padding:8px 12px;
+      display:inline-block;
+      border-radius:20px;
     }
 
-    footer {
-      margin-top: 30px;
-      background: #880e4f;
-      color: white;
-      padding: 15px;
-      text-align: center;
+    .pending{
+      background:#fff3cd;
+      color:#856404;
     }
 
-    @media(max-width: 600px) {
-      th, td {
-        padding: 8px;
-        font-size: 13px;
-      }
+    .confirmed{
+      background:#d4edda;
+      color:#155724;
+    }
+
+    .rejected{
+      background:#f8d7da;
+      color:#721c24;
+    }
+
+    .actions{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border:none;
+      padding:10px 16px;
+      border-radius:20px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    .confirm-btn{
+      background:#28a745;
+      color:white;
+    }
+
+    .reject-btn{
+      background:#ff9800;
+      color:white;
+    }
+
+    .delete-btn{
+      background:#dc3545;
+      color:white;
+    }
+
+    .empty{
+      text-align:center;
+      padding:40px;
+      background:white;
+      border-radius:15px;
+    }
+
+    footer{
+      background:#880e4f;
+      color:white;
+      text-align:center;
+      padding:17px;
+      margin-top:30px;
     }
   </style>
 </head>
@@ -113,39 +167,23 @@
 
 <div class="container">
 
-  <div class="card">
-
-    <h2>Customer Appointments</h2>
+  <div class="top-box">
 
     <div class="count">
-      Total Bookings: <span id="bookingCount">0</span>
+      Total Bookings:
+      <span id="bookingCount">0</span>
     </div>
 
-    <div id="message">
+    <a href="index.html" class="home-btn">
+      Customer Website
+    </a>
+
+  </div>
+
+  <div id="bookingList">
+    <div class="empty">
       Loading bookings...
     </div>
-
-    <div class="table-box">
-
-      <table id="bookingTable" style="display:none;">
-
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Mobile</th>
-            <th>Service</th>
-            <th>Date</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-
-        <tbody id="bookingList">
-        </tbody>
-
-      </table>
-
-    </div>
-
   </div>
 
 </div>
@@ -157,122 +195,265 @@
 
 <script type="module">
 
-  import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 
-  import {
-    getFirestore,
-    collection,
-    onSnapshot,
-    query,
-    orderBy
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  doc,
+  updateDoc,
+  deleteDoc
+}
+from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyAZoFqo9YYkdh7doVZwYj3qnugCwbYrwk8",
+
+  authDomain: "go-beauty-67bfe.firebaseapp.com",
+
+  projectId: "go-beauty-67bfe",
+
+  storageBucket: "go-beauty-67bfe.firebasestorage.app",
+
+  messagingSenderId: "509469188904",
+
+  appId: "1:509469188904:web:9ff8e45c6e84b00268661d"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+const bookingList =
+document.getElementById("bookingList");
+
+const bookingCount =
+document.getElementById("bookingCount");
+
+
+const bookingsQuery = query(
+  collection(db,"bookings"),
+  orderBy("createdAt","desc")
+);
+
+
+onSnapshot(bookingsQuery,(snapshot)=>{
+
+  bookingList.innerHTML = "";
+
+  bookingCount.textContent = snapshot.size;
+
+
+  if(snapshot.empty){
+
+    bookingList.innerHTML =
+    `<div class="empty">
+      अभी कोई booking नहीं है।
+    </div>`;
+
+    return;
   }
-  from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 
-  const firebaseConfig = {
+  snapshot.forEach((bookingDoc)=>{
 
-    apiKey: "AIzaSyAZoFqo9YYkdh7doVZwYj3qnugCwbYrwk8",
+    const booking = bookingDoc.data();
 
-    authDomain: "go-beauty-67bfe.firebaseapp.com",
+    const bookingId = bookingDoc.id;
 
-    projectId: "go-beauty-67bfe",
-
-    storageBucket: "go-beauty-67bfe.firebasestorage.app",
-
-    messagingSenderId: "509469188904",
-
-    appId: "1:509469188904:web:9ff8e45c6e84b00268661d"
-
-  };
+    const status =
+    booking.status || "Pending";
 
 
-  const app = initializeApp(firebaseConfig);
-
-  const db = getFirestore(app);
+    let statusClass = "pending";
 
 
-  const bookingList =
-    document.getElementById("bookingList");
-
-  const bookingCount =
-    document.getElementById("bookingCount");
-
-  const bookingTable =
-    document.getElementById("bookingTable");
-
-  const message =
-    document.getElementById("message");
-
-
-  const bookingsQuery = query(
-    collection(db, "bookings"),
-    orderBy("createdAt", "desc")
-  );
-
-
-  onSnapshot(bookingsQuery, (snapshot) => {
-
-    bookingList.innerHTML = "";
-
-    bookingCount.textContent = snapshot.size;
-
-
-    if (snapshot.empty) {
-
-      message.style.display = "block";
-
-      message.innerHTML =
-        "अभी कोई booking नहीं है।";
-
-      bookingTable.style.display = "none";
-
-      return;
+    if(status === "Confirmed"){
+      statusClass = "confirmed";
     }
 
 
-    message.style.display = "none";
-
-    bookingTable.style.display = "table";
-
-
-    snapshot.forEach((doc) => {
-
-      const booking = doc.data();
-
-      const row = document.createElement("tr");
+    if(status === "Rejected"){
+      statusClass = "rejected";
+    }
 
 
-      row.innerHTML = `
+    const card =
+    document.createElement("div");
 
-        <td>${booking.name || "-"}</td>
-
-        <td>${booking.mobile || "-"}</td>
-
-        <td>${booking.service || "-"}</td>
-
-        <td>${booking.date || "-"}</td>
-
-        <td>${booking.time || "-"}</td>
-
-      `;
+    card.className = "booking-card";
 
 
-      bookingList.appendChild(row);
+    card.innerHTML = `
 
-    });
+      <h3>
+        ${booking.name || "Customer"}
+      </h3>
+
+      <div class="details">
+
+        <p>
+          📞 <b>Mobile:</b><br>
+          ${booking.mobile || "-"}
+        </p>
+
+        <p>
+          💄 <b>Service:</b><br>
+          ${booking.service || "-"}
+        </p>
+
+        <p>
+          📅 <b>Date:</b><br>
+          ${booking.date || "-"}
+        </p>
+
+        <p>
+          🕐 <b>Time:</b><br>
+          ${booking.time || "-"}
+        </p>
+
+      </div>
 
 
-  }, (error) => {
+      <div class="status ${statusClass}">
+        Status: ${status}
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="confirm-btn"
+          onclick="confirmBooking('${bookingId}')">
+          ✓ Confirm
+        </button>
+
+
+        <button
+          class="reject-btn"
+          onclick="rejectBooking('${bookingId}')">
+          ✕ Reject
+        </button>
+
+
+        <button
+          class="delete-btn"
+          onclick="removeBooking('${bookingId}')">
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+
+    bookingList.appendChild(card);
+
+  });
+
+});
+
+
+window.confirmBooking =
+async function(id){
+
+  try{
+
+    const bookingRef =
+    doc(db,"bookings",id);
+
+    await updateDoc(
+      bookingRef,
+      {
+        status:"Confirmed"
+      }
+    );
+
+  }
+  catch(error){
 
     console.error(error);
 
-    message.style.display = "block";
+    alert(
+      "Booking confirm नहीं हुई."
+    );
 
-    message.innerHTML =
-      "Bookings load नहीं हुईं। Firebase Rules check करें।";
+  }
 
-  });
+};
+
+
+window.rejectBooking =
+async function(id){
+
+  try{
+
+    const bookingRef =
+    doc(db,"bookings",id);
+
+    await updateDoc(
+      bookingRef,
+      {
+        status:"Rejected"
+      }
+    );
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Booking reject नहीं हुई."
+    );
+
+  }
+
+};
+
+
+window.removeBooking =
+async function(id){
+
+  const confirmDelete =
+  confirm(
+    "क्या आप यह booking delete करना चाहते हैं?"
+  );
+
+
+  if(!confirmDelete){
+    return;
+  }
+
+
+  try{
+
+    const bookingRef =
+    doc(db,"bookings",id);
+
+    await deleteDoc(bookingRef);
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Booking delete नहीं हुई."
+    );
+
+  }
+
+};
 
 </script>
 
