@@ -300,23 +300,6 @@ function searchBeauty(){
   }
 }
 
-function bookAppointment(){
-
-  const name=document.getElementById("name").value;
-  const mobile=document.getElementById("mobile").value;
-  const service=document.getElementById("service").value;
-  const date=document.getElementById("date").value;
-  const time=document.getElementById("time").value;
-
-  if(!name || !mobile || !service || !date || !time){
-    alert("Please fill all details.");
-    return;
-  }
-
-  document.getElementById("result").innerHTML =
-  "✓ Appointment request submitted successfully!";
-
-}
 
 </script>
   <script type="module">
