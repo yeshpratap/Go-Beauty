@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go Beauty Admin Login</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#fff0f5,#f8bbd0);
+    }
+
+    .login-box{
+      width:90%;
+      max-width:420px;
+      background:white;
+      padding:30px;
+      border-radius:18px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    h1{
+      text-align:center;
+      color:#ad1457;
+      margin-bottom:5px;
+    }
+
+    p{
+      text-align:center;
+      color:#666;
+      margin-bottom:25px;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      margin-bottom:14px;
+      border:1px solid #ccc;
+      border-radius:9px;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:25px;
+      background:#c2185b;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      margin-top:5px;
+    }
+
+    button:hover{
+      background:#ad1457;
+    }
+
+    .secondary{
+      background:#444;
+    }
+
+    #message{
+      margin-top:15px;
+      text-align:center;
+      font-weight:bold;
+    }
+
+    .success{
+      color:green;
+    }
+
+    .error{
+      color:#c62828;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <h1>Go Beauty</h1>
+    <p>Admin Login</p>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Admin Email"
+      autocomplete="email"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button onclick="loginAdmin()">
+      Login
+    </button>
+
+    <button class="secondary" onclick="createAdmin()">
+      Create Admin Account
+    </button>
+
+    <div id="message"></div>
+
+  </div>
+
+
+  <script type="module">
+
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      onAuthStateChanged
+    }
+    from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZoFqo9YYkdh7doVZwYj3qnugCwbYrwk8",
+      authDomain: "go-beauty-67bfe.firebaseapp.com",
+      projectId: "go-beauty-67bfe",
+      storageBucket: "go-beauty-67bfe.firebasestorage.app",
+      messagingSenderId: "509469188904",
+      appId: "1:509469188904:web:9ff8e45c6e84b00268661d"
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const message =
+      document.getElementById("message");
+
+
+    window.loginAdmin = async function(){
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+
+      if(!email || !password){
+
+        message.className = "error";
+
+        message.innerText =
+          "Email और Password दोनों भरें।";
+
+        return;
+      }
+
+
+      try{
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        message.className = "success";
+
+        message.innerText =
+          "Login successful!";
+
+        setTimeout(function(){
+
+          window.location.href = "admin.html";
+
+        },700);
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        message.className = "error";
+
+        message.innerText =
+          "Login failed. Email या password check करें.";
+
+      }
+
+    };
+
+
+    window.createAdmin = async function(){
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+
+      if(!email || !password){
+
+        message.className = "error";
+
+        message.innerText =
+          "Email और Password दोनों भरें।";
+
+        return;
+      }
+
+
+      if(password.length < 6){
+
+        message.className = "error";
+
+        message.innerText =
+          "Password कम से कम 6 characters का रखें।";
+
+        return;
+      }
+
+
+      try{
+
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        message.className = "success";
+
+        message.innerText =
+          "Admin account created successfully!";
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        message.className = "error";
+
+        message.innerText =
+          "Account create नहीं हुआ. Email पहले से registered हो सकता है.";
+
+      }
+
+    };
+
+
+    onAuthStateChanged(auth,function(user){
+
+      if(user){
+        console.log("Logged in:",user.email);
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
