@@ -111,10 +111,7 @@
       Login
     </button>
 
-    <button class="secondary" onclick="createAdmin()">
-      Create Admin Account
-    </button>
-
+   
     <div id="message"></div>
 
   </div>
@@ -128,7 +125,7 @@
     import {
       getAuth,
       signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
+      
       onAuthStateChanged
     }
     from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
@@ -205,63 +202,7 @@
     };
 
 
-    window.createAdmin = async function(){
-
-      const email =
-        document.getElementById("email").value.trim();
-
-      const password =
-        document.getElementById("password").value;
-
-
-      if(!email || !password){
-
-        message.className = "error";
-
-        message.innerText =
-          "Email और Password दोनों भरें।";
-
-        return;
-      }
-
-
-      if(password.length < 6){
-
-        message.className = "error";
-
-        message.innerText =
-          "Password कम से कम 6 characters का रखें।";
-
-        return;
-      }
-
-
-      try{
-
-        await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-        message.className = "success";
-
-        message.innerText =
-          "Admin account created successfully!";
-
-      }
-      catch(error){
-
-        console.error(error);
-
-        message.className = "error";
-
-        message.innerText =
-          "Account create नहीं हुआ. Email पहले से registered हो सकता है.";
-
-      }
-
-    };
+    
 
 
     onAuthStateChanged(auth,function(user){
