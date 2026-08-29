@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Go Beauty - Admin Panel</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff5f8;
+    }
+
+    header {
+      background: linear-gradient(135deg, #e91e63, #ad1457);
+      color: white;
+      padding: 22px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 25px auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+      color: #c2185b;
+      margin-top: 0;
+    }
+
+    .table-box {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th {
+      background: #c2185b;
+      color: white;
+      padding: 12px;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    tr:hover {
+      background: #fff0f5;
+    }
+
+    .count {
+      background: #fce4ec;
+      color: #ad1457;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    #message {
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 30px;
+      background: #880e4f;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    @media(max-width: 600px) {
+      th, td {
+        padding: 8px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Go Beauty</h1>
+  <p>Admin Booking Panel</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Customer Appointments</h2>
+
+    <div class="count">
+      Total Bookings: <span id="bookingCount">0</span>
+    </div>
+
+    <div id="message">
+      Loading bookings...
+    </div>
+
+    <div class="table-box">
+
+      <table id="bookingTable" style="display:none;">
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Service</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+
+        <tbody id="bookingList">
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Go Beauty | Admin Panel
+</footer>
+
+
+<script type="module">
+
+  import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    query,
+    orderBy
+  }
+  from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyAZoFqo9YYkdh7doVZwYj3qnugCwbYrwk8",
+
+    authDomain: "go-beauty-67bfe.firebaseapp.com",
+
+    projectId: "go-beauty-67bfe",
+
+    storageBucket: "go-beauty-67bfe.firebasestorage.app",
+
+    messagingSenderId: "509469188904",
+
+    appId: "1:509469188904:web:9ff8e45c6e84b00268661d"
+
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const db = getFirestore(app);
+
+
+  const bookingList =
+    document.getElementById("bookingList");
+
+  const bookingCount =
+    document.getElementById("bookingCount");
+
+  const bookingTable =
+    document.getElementById("bookingTable");
+
+  const message =
+    document.getElementById("message");
+
+
+  const bookingsQuery = query(
+    collection(db, "bookings"),
+    orderBy("createdAt", "desc")
+  );
+
+
+  onSnapshot(bookingsQuery, (snapshot) => {
+
+    bookingList.innerHTML = "";
+
+    bookingCount.textContent = snapshot.size;
+
+
+    if (snapshot.empty) {
+
+      message.style.display = "block";
+
+      message.innerHTML =
+        "अभी कोई booking नहीं है।";
+
+      bookingTable.style.display = "none";
+
+      return;
+    }
+
+
+    message.style.display = "none";
+
+    bookingTable.style.display = "table";
+
+
+    snapshot.forEach((doc) => {
+
+      const booking = doc.data();
+
+      const row = document.createElement("tr");
+
+
+      row.innerHTML = `
+
+        <td>${booking.name || "-"}</td>
+
+        <td>${booking.mobile || "-"}</td>
+
+        <td>${booking.service || "-"}</td>
+
+        <td>${booking.date || "-"}</td>
+
+        <td>${booking.time || "-"}</td>
+
+      `;
+
+
+      bookingList.appendChild(row);
+
+    });
+
+
+  }, (error) => {
+
+    console.error(error);
+
+    message.style.display = "block";
+
+    message.innerHTML =
+      "Bookings load नहीं हुईं। Firebase Rules check करें।";
+
+  });
+
+</script>
+
+</body>
+</html>
