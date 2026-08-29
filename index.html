@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Go Beauty - Ladies Parlour Booking</title>
 
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
 
@@ -19,14 +20,14 @@
     }
 
     header {
-      background: linear-gradient(135deg, #ff4f91, #c2185b);
+      background: linear-gradient(135deg, #ff4f91, #b31255);
       color: white;
-      padding: 20px;
+      padding: 22px 15px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 32px;
+      font-size: 34px;
       margin-bottom: 5px;
     }
 
@@ -34,15 +35,43 @@
       font-size: 15px;
     }
 
-    .search-box {
+    nav {
+      background: white;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav button {
+      border: none;
+      background: #ffe0eb;
+      color: #b31255;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      background: #ff4f91;
+      color: white;
+    }
+
+    .search-area {
       padding: 20px;
       display: flex;
       justify-content: center;
     }
 
-    .search-box input {
-      width: 80%;
-      max-width: 500px;
+    .search-area input {
+      width: 75%;
+      max-width: 520px;
       padding: 14px;
       border: 1px solid #ddd;
       border-radius: 25px 0 0 25px;
@@ -50,36 +79,36 @@
       font-size: 16px;
     }
 
-    .search-box button {
-      padding: 14px 20px;
+    .search-area button {
       border: none;
-      background: #c2185b;
+      background: #b31255;
       color: white;
+      padding: 14px 20px;
       border-radius: 0 25px 25px 0;
       cursor: pointer;
     }
 
     .hero {
+      padding: 35px 20px;
       text-align: center;
-      padding: 30px 20px;
     }
 
     .hero h2 {
-      color: #c2185b;
+      color: #b31255;
+      font-size: 30px;
       margin-bottom: 10px;
-      font-size: 28px;
     }
 
     .hero p {
-      margin-bottom: 20px;
       color: #666;
+      margin-bottom: 20px;
     }
 
-    .hero button {
+    .main-btn {
+      border: none;
       background: #ff4f91;
       color: white;
-      padding: 13px 25px;
-      border: none;
+      padding: 13px 24px;
       border-radius: 25px;
       font-size: 16px;
       cursor: pointer;
@@ -87,85 +116,108 @@
 
     .section-title {
       text-align: center;
-      color: #c2185b;
-      margin: 25px 0 15px;
+      color: #b31255;
+      margin: 25px 0 10px;
     }
 
     .services {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 15px;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
     }
 
-    .card {
+    .service-card {
       background: white;
-      padding: 20px;
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 20px;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    .card h3 {
-      color: #c2185b;
+    .service-card .icon {
+      font-size: 35px;
       margin-bottom: 8px;
     }
 
-    .parlours {
-      max-width: 900px;
+    .service-card h3 {
+      color: #b31255;
+      margin-bottom: 5px;
+    }
+
+    .container {
+      max-width: 1000px;
       margin: auto;
       padding: 20px;
     }
 
     .parlour-card {
       background: white;
-      margin-bottom: 15px;
-      padding: 18px;
       border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .parlour-card h3 {
-      color: #c2185b;
-      margin-bottom: 5px;
+      color: #b31255;
+      margin-bottom: 8px;
+    }
+
+    .parlour-card p {
+      margin: 5px 0;
     }
 
     .parlour-card button {
-      margin-top: 10px;
-      background: #c2185b;
-      color: white;
       border: none;
+      background: #b31255;
+      color: white;
       padding: 10px 18px;
+      margin-top: 10px;
       border-radius: 20px;
       cursor: pointer;
     }
 
-    .booking {
-      background: #ffe4ef;
-      padding: 25px 20px;
+    .form-section {
+      background: #ffe7f0;
+      padding: 35px 20px;
       margin-top: 20px;
     }
 
-    .booking form {
-      max-width: 500px;
+    .form-box {
+      max-width: 650px;
       margin: auto;
       background: white;
-      padding: 20px;
-      border-radius: 15px;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .booking input,
-    .booking select {
+    .form-box h2 {
+      text-align: center;
+      color: #b31255;
+      margin-bottom: 20px;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box textarea {
       width: 100%;
-      margin-bottom: 12px;
       padding: 12px;
+      margin-bottom: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      font-size: 15px;
     }
 
-    .booking button {
+    .form-box textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-box button {
       width: 100%;
       padding: 13px;
       background: #ff4f91;
@@ -176,16 +228,37 @@
       cursor: pointer;
     }
 
+    .notice {
+      margin-top: 12px;
+      text-align: center;
+      font-weight: bold;
+      color: green;
+    }
+
     footer {
-      background: #c2185b;
+      background: #b31255;
       color: white;
       text-align: center;
-      padding: 15px;
-      margin-top: 25px;
+      padding: 20px;
+      margin-top: 30px;
     }
 
     .hidden {
       display: none;
+    }
+
+    @media(max-width:600px) {
+      .hero h2 {
+        font-size: 24px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .search-area input {
+        width: 70%;
+      }
     }
   </style>
 </head>
@@ -197,203 +270,130 @@
   <p>Ladies Beauty Parlour Online Booking</p>
 </header>
 
-<div class="search-box">
+<nav>
+  <button onclick="goTo('home')">Home</button>
+  <button onclick="goTo('services')">Services</button>
+  <button onclick="goTo('parlours')">Parlours</button>
+  <button onclick="goTo('booking')">Book Appointment</button>
+  <button onclick="goTo('register')">Register Parlour</button>
+</nav>
+
+<div class="search-area">
   <input
     type="text"
     id="searchInput"
-    placeholder="Search parlour or service..."
-    onkeyup="searchParlour()"
+    placeholder="Search parlour, service or location..."
+    onkeyup="searchItems()"
   >
-  <button onclick="searchParlour()">Search</button>
+  <button onclick="searchItems()">Search</button>
 </div>
 
-<section class="hero">
+<section class="hero" id="home">
   <h2>Book Your Beauty Appointment Online</h2>
-  <p>No Waiting. Choose your parlour, service and preferred time.</p>
-  <button onclick="goToBooking()">Book Appointment</button>
+
+  <p>
+    No Waiting. Choose your favourite ladies beauty parlour,
+    service, date and time.
+  </p>
+
+  <button class="main-btn" onclick="goTo('booking')">
+    Book Appointment
+  </button>
 </section>
 
-<h2 class="section-title">Our Services</h2>
+<section id="services">
 
-<section class="services">
+  <h2 class="section-title">Our Services</h2>
 
-  <div class="card searchable">
-    <h3>Facial</h3>
-    <p>Glow and skin care treatment</p>
+  <div class="services">
+
+    <div class="service-card searchable">
+      <div class="icon">💆‍♀️</div>
+      <h3>Facial</h3>
+      <p>Glow and skin care treatment</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">💇‍♀️</div>
+      <h3>Hair Cut</h3>
+      <p>Professional ladies haircut</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">👰</div>
+      <h3>Bridal Makeup</h3>
+      <p>Premium bridal makeup</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">✨</div>
+      <h3>Waxing</h3>
+      <p>Full body and regular waxing</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">💅</div>
+      <h3>Manicure</h3>
+      <p>Hand and nail care</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">🦶</div>
+      <h3>Pedicure</h3>
+      <p>Foot and nail care</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">💄</div>
+      <h3>Party Makeup</h3>
+      <p>Professional party makeup</p>
+    </div>
+
+    <div class="service-card searchable">
+      <div class="icon">💇</div>
+      <h3>Hair Styling</h3>
+      <p>Modern hair styling service</p>
+    </div>
+
   </div>
-
-  <div class="card searchable">
-    <h3>Hair Cut</h3>
-    <p>Professional ladies haircut</p>
-  </div>
-
-  <div class="card searchable">
-    <h3>Bridal Makeup</h3>
-    <p>Premium bridal makeup service</p>
-  </div>
-
-  <div class="card searchable">
-    <h3>Waxing</h3>
-    <p>Full body and regular waxing</p>
-  </div>
-
-  <div class="card searchable">
-    <h3>Manicure</h3>
-    <p>Hand and nail care</p>
-  </div>
-
-  <div class="card searchable">
-    <h3>Pedicure</h3>
-    <p>Foot and nail care</p>
-  </div>
-
-</section>
-
-<h2 class="section-title">Beauty Parlours Near You</h2>
-
-<section class="parlours">
-
-  <div class="parlour-card searchable">
-    <h3>Pink Glow Beauty Parlour</h3>
-    <p>⭐ 4.8 | Ladies Salon</p>
-    <p>Facial, Makeup, Hair Cut, Waxing</p>
-    <button onclick="goToBooking()">Book Now</button>
-  </div>
-
-  <div class="parlour-card searchable">
-    <h3>Queen Beauty Studio</h3>
-    <p>⭐ 4.7 | Beauty & Makeup</p>
-    <p>Bridal Makeup, Hair Styling, Facial</p>
-    <button onclick="goToBooking()">Book Now</button>
-  </div>
-
-  <div class="parlour-card searchable">
-    <h3>Royal Ladies Salon</h3>
-    <p>⭐ 4.6 | Ladies Beauty Parlour</p>
-    <p>Hair Cut, Waxing, Manicure, Pedicure</p>
-    <button onclick="goToBooking()">Book Now</button>
-  </div>
-
-</section>
-
-<section class="booking" id="booking">
-
-  <h2 class="section-title">Book Appointment</h2>
-
-  <form onsubmit="bookAppointment(event)">
-
-    <input
-      type="text"
-      id="name"
-      placeholder="Your Name"
-      required
-    >
-
-    <input
-      type="tel"
-      id="mobile"
-      placeholder="Mobile Number"
-      required
-    >
-
-    <select id="service" required>
-      <option value="">Select Service</option>
-      <option>Facial</option>
-      <option>Hair Cut</option>
-      <option>Bridal Makeup</option>
-      <option>Waxing</option>
-      <option>Manicure</option>
-      <option>Pedicure</option>
-    </select>
-
-    <input
-      type="date"
-      id="date"
-      required
-    >
-
-    <input
-      type="time"
-      id="time"
-      required
-    >
-
-    <button type="submit">
-      Confirm Booking
-    </button>
-
-  </form>
 
 </section>
 
-<footer>
-  © 2026 Go Beauty | Online Beauty Parlour Booking
-</footer>
+<section id="parlours">
 
-<script>
+  <h2 class="section-title">Beauty Parlours Near You</h2>
 
-function searchParlour() {
+  <div class="container" id="parlourList">
 
-  let input = document
-    .getElementById("searchInput")
-    .value
-    .toLowerCase();
+    <div class="parlour-card searchable">
+      <h3>Pink Glow Beauty Parlour</h3>
+      <p>⭐ 4.8 Rating</p>
+      <p>📍 Kalyanpur</p>
+      <p>📞 9876543210</p>
+      <p>💄 Facial, Hair Cut, Makeup, Waxing</p>
+      <p>💰 Starting from ₹299</p>
+      <p>🕘 9:00 AM - 8:00 PM</p>
 
-  let items = document
-    .getElementsByClassName("searchable");
+      <button onclick="selectParlour('Pink Glow Beauty Parlour')">
+        Book Now
+      </button>
+    </div>
 
-  for (let i = 0; i < items.length; i++) {
+    <div class="parlour-card searchable">
+      <h3>Queen Beauty Studio</h3>
+      <p>⭐ 4.7 Rating</p>
+      <p>📍 Kakadeo</p>
+      <p>📞 9876501234</p>
+      <p>💄 Bridal Makeup, Facial, Hair Styling</p>
+      <p>💰 Starting from ₹399</p>
+      <p>🕘 10:00 AM - 9:00 PM</p>
 
-    let text = items[i]
-      .innerText
-      .toLowerCase();
+      <button onclick="selectParlour('Queen Beauty Studio')">
+        Book Now
+      </button>
+    </div>
 
-    if (text.includes(input)) {
-      items[i].classList.remove("hidden");
-    } else {
-      items[i].classList.add("hidden");
-    }
-
-  }
-}
-
-function goToBooking() {
-
-  document
-    .getElementById("booking")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
-
-}
-
-function bookAppointment(event) {
-
-  event.preventDefault();
-
-  let name =
-    document.getElementById("name").value;
-
-  let service =
-    document.getElementById("service").value;
-
-  let date =
-    document.getElementById("date").value;
-
-  let time =
-    document.getElementById("time").value;
-
-  alert(
-    "Booking Confirmed!\\n\\n" +
-    "Name: " + name +
-    "\\nService: " + service +
-    "\\nDate: " + date +
-    "\\nTime: " + time
-  );
-
-}
-
-</script>
-
-</body>
-</html>
+    <div class="parlour-card searchable">
+      <h3>Royal Ladies Salon</h3>
+      <p>⭐ 4.6 Rating</p>
+      <p
