@@ -319,6 +319,54 @@ function bookAppointment(){
 }
 
 </script>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAZoFqo9YYkdh7doVZwYj3qnugCwbYrwk8",
+  authDomain: "go-beauty-67bfe.firebaseapp.com",
+  projectId: "go-beauty-67bfe",
+  storageBucket: "go-beauty-67bfe.firebasestorage.app",
+  messagingSenderId: "509469188904",
+  appId: "1:509469188904:web:9ff8e45c6e84b00268661d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.bookAppointment = async function() {
+
+  const name = document.getElementById("name").value;
+  const mobile = document.getElementById("mobile").value;
+  const service = document.getElementById("service").value;
+  const date = document.getElementById("date").value;
+  const time = document.getElementById("time").value;
+
+  if (!name || !mobile || !service || !date || !time) {
+    alert("Please fill all details.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "bookings"), {
+      name: name,
+      mobile: mobile,
+      service: service,
+      date: date,
+      time: time,
+      createdAt: new Date()
+    });
+
+    document.getElementById("result").innerHTML =
+      "✓ Appointment saved successfully!";
+
+  } catch (error) {
+    console.error(error);
+    alert("Booking save नहीं हुई. Please try again.");
+  }
+};
+</script>
 
 </body>
 </html>
