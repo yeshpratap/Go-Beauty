@@ -358,10 +358,16 @@ onAuthStateChanged(auth, (user) => {
   document.getElementById("adminEmail").innerText =
     "Logged in: " + user.email;
 
+  // Hide checking screen
+  checking.style.display = "none";
+
+  // Show admin panel
+  adminApp.style.display = "block";
+
+  // Load bookings
   loadBookings();
 
 });
-
 function loadBookings(){
 
   const bookingsQuery = query(
