@@ -314,9 +314,7 @@ function searchBeauty() {
   }
 
   const servicesSection = document.getElementById("services");
-  const serviceItems = servicesSection.querySelectorAll(
-    ".service-card, .service, .card, div"
-  );
+ const serviceItems = servicesSection.querySelectorAll(".card");
 
   const match = Array.from(serviceItems).find(item =>
     item.textContent.toLowerCase().includes(search)
