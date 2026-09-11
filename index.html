@@ -301,17 +301,40 @@ Confirm Appointment
 
 <script>
 
-function searchBeauty(){
-  const search =
-  document.getElementById("searchInput").value.trim();
+function searchBeauty() {
+  const search = document
+    .getElementById("searchInput")
+    .value
+    .trim()
+    .toLowerCase();
 
-  if(search === ""){
+  if (search === "") {
     alert("Please enter a parlour, service or location.");
-  }else{
-    alert("Searching for: " + search);
+    return;
+  }
+
+  const servicesSection = document.getElementById("services");
+  const serviceItems = servicesSection.querySelectorAll(
+    ".service-card, .service, .card, div"
+  );
+
+  const match = Array.from(serviceItems).find(item =>
+    item.textContent.toLowerCase().includes(search)
+  );
+
+  if (match) {
+    match.scrollIntoView({ behavior: "smooth", block: "center" });
+    match.style.outline = "3px solid #d81b60";
+    match.style.backgroundColor = "#fff0f5";
+
+    setTimeout(() => {
+      match.style.outline = "";
+      match.style.backgroundColor = "";
+    }, 3000);
+  } else {
+    alert("No matching service found.");
   }
 }
-
 
 </script>
   <script type="module">
