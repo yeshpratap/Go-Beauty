@@ -266,7 +266,61 @@ placeholder="Search parlour, service or location...">
 </div>
 </section>
 
-<section class="booking" id="booking">
+<section class="booking" id="parlour-registration">
+  <h2>Register Your Parlour</h2>
+
+  <input
+    id="parlourName"
+    type="text"
+    placeholder="Parlour Name"
+    required
+  >
+
+  <input
+    id="ownerName"
+    type="text"
+    placeholder="Owner Name"
+    required
+  >
+
+  <input
+    id="parlourMobile"
+    type="tel"
+    placeholder="10 Digit Mobile Number"
+    maxlength="10"
+    required
+  >
+
+  <input
+    id="parlourLocation"
+    type="text"
+    placeholder="Area / Location"
+    required
+  >
+
+  <textarea
+    id="parlourAddress"
+    placeholder="Full Parlour Address"
+    rows="3"
+    style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;"
+    required
+  ></textarea>
+
+  <select id="parlourService" required>
+    <option value="">Select Main Service</option>
+    <option value="Facial">Facial</option>
+    <option value="Hair Cut">Hair Cut</option>
+    <option value="Bridal Makeup">Bridal Makeup</option>
+    <option value="Waxing">Waxing</option>
+    <option value="Manicure">Manicure</option>
+  </select>
+
+  <button type="button" id="registerParlourBtn">
+    Register Parlour
+  </button>
+
+  <p id="parlourMessage"></p>
+</section>
 
 <h2>Book Appointment</h2>
 
