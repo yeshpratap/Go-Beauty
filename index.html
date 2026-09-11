@@ -435,7 +435,86 @@ window.bookAppointment = async function() {
     console.error(error);
     alert("Booking save नहीं हुई. Please try again.");
   }
-};
+};const registerParlourBtn =
+  document.getElementById("registerParlourBtn");
+
+registerParlourBtn.addEventListener("click", async () => {
+  const parlourName =
+    document.getElementById("parlourName").value.trim();
+
+  const ownerName =
+    document.getElementById("ownerName").value.trim();
+
+  const mobile =
+    document.getElementById("parlourMobile").value.trim();
+
+  const location =
+    document.getElementById("parlourLocation").value.trim();
+
+  const address =
+    document.getElementById("parlourAddress").value.trim();
+
+  const service =
+    document.getElementById("parlourService").value;
+
+  const message =
+    document.getElementById("parlourMessage");
+
+  if (
+    !parlourName ||
+    !ownerName ||
+    !mobile ||
+    !location ||
+    !address ||
+    !service
+  ) {
+    message.style.color = "red";
+    message.textContent = "Please fill all parlour details.";
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    message.style.color = "red";
+    message.textContent = "Please enter a valid 10 digit mobile number.";
+    return;
+  }
+
+  try {
+    registerParlourBtn.disabled = true;
+    registerParlourBtn.textContent = "Registering...";
+
+    await addDoc(collection(db, "parlours"), {
+      parlourName: parlourName,
+      ownerName: ownerName,
+      mobile: mobile,
+      location: location,
+      address: address,
+      service: service,
+      status: "Pending",
+      createdAt: new Date()
+    });
+
+    message.style.color = "green";
+    message.textContent =
+      "✓ Parlour registration submitted successfully!";
+
+    document.getElementById("parlourName").value = "";
+    document.getElementById("ownerName").value = "";
+    document.getElementById("parlourMobile").value = "";
+    document.getElementById("parlourLocation").value = "";
+    document.getElementById("parlourAddress").value = "";
+    document.getElementById("parlourService").value = "";
+
+  } catch (error) {
+    console.error(error);
+    message.style.color = "red";
+    message.textContent =
+      "Registration failed. Please try again.";
+  } finally {
+    registerParlourBtn.disabled = false;
+    registerParlourBtn.textContent = "Register Parlour";
+  }
+});
 </script>
 
 </body>
